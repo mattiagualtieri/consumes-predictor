@@ -1,0 +1,7 @@
+seed: 0
+test_size: 0.3
+hyperparams:
+  sequence_length: 5
+  epochs: 2000
+  learning_rate: 0.001
+  lstm_depth: 2
