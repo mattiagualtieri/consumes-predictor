@@ -1,0 +1,8 @@
+date;year;month;day_of_week;weekend;state;region;city;age;occupation;family_members;temperature;rain;consume
+10/10/2023;2023;10;2;0;italy;emilia-romagna;modena;23;student;4;25;0;650
+11/10/2023;2023;10;3;0;italy;emilia-romagna;modena;23;student;4;25;0;650
+12/10/2023;2023;10;4;0;italy;emilia-romagna;modena;23;student;4;20;0;700
+13/10/2023;2023;10;5;0;italy;emilia-romagna;modena;23;student;4;20;0;650
+14/10/2023;2023;10;6;1;italy;emilia-romagna;modena;23;student;4;20;0;1000
+15/10/2023;2023;10;7;1;italy;emilia-romagna;modena;23;student;4;20;0;1100
+16/10/2023;2023;10;1;0;italy;emilia-romagna;modena;23;student;4;20;0;650

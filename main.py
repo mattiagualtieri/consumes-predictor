@@ -15,6 +15,7 @@ with open('application.yaml') as file:
 
 print('Config: %s' % config)
 
+# Fixed seed
 torch.manual_seed(config['seed'])
 
 if len(sys.argv) < 2:
@@ -46,13 +47,15 @@ training_set = df.values
 training_set = training_set.astype('float32')
 
 # Scale y in [0, 1]
-consume_max = np.max(training_set[:, -1:])
-consume_min = np.min(training_set[:, -1:])
+consume_max = config['consume']['max'] # np.max(training_set[:, -1:])
+consume_min = config['consume']['min'] # np.min(training_set[:, -1:])
 training_set[:, -1:] = (training_set[:, -1:] - consume_min) / (consume_max - consume_min)
 training_data = training_set
 
 seq_length = config['hyperparams']['sequence_length']
 x, y = sliding_windows(training_data, seq_length)
+x = x[:, :, :-1]
+y = y[:, -1:]
 
 train_size = int(len(y) * (1 - config['test_size']))
 test_size = len(y) - train_size
@@ -70,7 +73,7 @@ testY = Variable(torch.Tensor(np.array(y[train_size:len(y)])))
 num_epochs = config['hyperparams']['epochs']
 learning_rate = config['hyperparams']['learning_rate']
 
-input_size = training_set.shape[1]
+input_size = training_set.shape[1] - 1
 hidden_size = config['hyperparams']['lstm_depth']
 num_layers = 1
 num_classes = 1
@@ -85,7 +88,7 @@ for epoch in range(num_epochs):
     outputs = lstm(trainX)
     optimizer.zero_grad()
 
-    loss = criterion(outputs, trainY[:, -1:])
+    loss = criterion(outputs, trainY)
 
     loss.backward()
 
@@ -100,7 +103,6 @@ train_predict = lstm(dataX)
 
 data_predict = train_predict.data.numpy()
 dataY_plot = dataY.data.numpy()
-dataY_plot = dataY_plot[:, -1:]
 
 dataY_plot = dataY_plot * (consume_max - consume_min) + consume_min
 data_predict = data_predict * (consume_max - consume_min) + consume_min
@@ -115,3 +117,5 @@ plt.plot(data_predict, label='Predicted Data')
 plt.title('Consumes Prediction')
 plt.legend()
 plt.show()
+
+torch.save(lstm, 'checkpoint/model_weights.pth')

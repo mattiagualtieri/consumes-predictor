@@ -1,7 +1,11 @@
 seed: 0
 test_size: 0.3
+consume:
+  max: 2000
+  min: 0
 hyperparams:
-  sequence_length: 5
+  sequence_length: 3
   epochs: 2000
-  learning_rate: 0.001
+  learning_rate: 0.005
   lstm_depth: 2
+  epochs_retraining: 10
