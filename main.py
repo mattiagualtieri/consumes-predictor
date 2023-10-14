@@ -47,8 +47,8 @@ training_set = df.values
 training_set = training_set.astype('float32')
 
 # Scale y in [0, 1]
-consume_max = config['consume']['max'] # np.max(training_set[:, -1:])
-consume_min = config['consume']['min'] # np.min(training_set[:, -1:])
+consume_max = config['consume']['max']
+consume_min = config['consume']['min']
 training_set[:, -1:] = (training_set[:, -1:] - consume_min) / (consume_max - consume_min)
 training_data = training_set
 

@@ -87,9 +87,10 @@ lstm.eval()
 predictions = lstm(input)
 
 predictions = predictions.data.numpy()
+predictions = np.roll(predictions, 2)
 real_values = real_values.data.numpy()
 
-predictions = predictions * (1100 - 350) + 350
+predictions = predictions * (config['consume']['max'] - config['consume']['min']) + config['consume']['min']
 
 # print('RMSE: %1.5f' % rmse(dataY_plot, data_predict))
 
